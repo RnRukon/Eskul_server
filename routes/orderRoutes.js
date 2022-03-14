@@ -130,7 +130,6 @@ router.post("/ipn", async (req, res) => {
   });
   res.status(300).redirect("https://eskul-avengers.web.app");
 });
-
 router.get("/order/:tran_id", async (req, res) => {
   const id = req.params.tran_id;
   const result = await Order.findOne({ tran_id: id });
