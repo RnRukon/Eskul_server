@@ -88,6 +88,7 @@ router.post("/init", async (req, res) => {
     false
   ); //true for live default false for sandbox
   sslcommer.init(data).then((data) => {
+
     //process the response that got from sslcommerz
     //https://developer.sslcommerz.com/doc/v4/#returned-parameters
 
