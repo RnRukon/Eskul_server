@@ -45,10 +45,10 @@ router.post("/init", async (req, res) => {
     total_amount: req.body.total_amount,
     currency: req.body.currency,
     tran_id: uuidv4(),
-    success_url: "https://eskul-server.herokuapp.com/api/success",
-    fail_url: "https://eskul-server.herokuapp.com/api/fail",
-    cancel_url: "https://eskul-server.herokuapp.com/api/cancel",
-    ipn_url: "https://eskul-server.herokuapp.com/api/ipn",
+    success_url: "http://localhost:8000/api/success",
+    fail_url: "http://localhost:8000/api/fail",
+    cancel_url: "http://localhost:8000/api/cancel",
+    ipn_url: "http://localhost:8000/api/ipn",
     shipping_method: "Courier",
     product_name: "req.body.product_name",
     product_category: "Electronic",
@@ -110,28 +110,28 @@ router.post("/success", async (req, res) => {
       },
     }
   );
-  res.status(200).redirect(`https://eskul-avengers.web.app/success/${req.body.tran_id}`);
+  res.status(200).redirect(`http://localhost:3000/success/${req.body.tran_id}`);
 });
 
 router.post("/fail", async (req, res) => {
   const result = await Order.deleteOne({
     tran_id: req.body.tran_id,
   });
-  res.status(400).redirect("https://eskul-avengers.web.app");
+  res.status(400).redirect("http://localhost:3000");
 });
 
 router.post("/cancel", async (req, res) => {
   const result = await Order.deleteOne({
     tran_id: req.body.tran_id,
   });
-  res.status(300).redirect("https://eskul-avengers.web.app");
+  res.status(300).redirect("http://localhost:3000");
 });
 
 router.post("/ipn", async (req, res) => {
   const result = await Order.deleteOne({
     tran_id: req.body.tran_id,
   });
-  res.status(300).redirect("https://eskul-avengers.web.app");
+  res.status(300).redirect("http://localhost:3000");
 });
 
 router.get("/order/:tran_id", async (req, res) => {
