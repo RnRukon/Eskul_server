@@ -112,24 +112,28 @@ router.post("/success", async (req, res) => {
   );
   res.status(200).redirect(`https://eskul-avengers.web.app/success/${req.body.tran_id}`);
 });
+
 router.post("/fail", async (req, res) => {
   const result = await Order.deleteOne({
     tran_id: req.body.tran_id,
   });
   res.status(400).redirect("https://eskul-avengers.web.app");
 });
+
 router.post("/cancel", async (req, res) => {
   const result = await Order.deleteOne({
     tran_id: req.body.tran_id,
   });
   res.status(300).redirect("https://eskul-avengers.web.app");
 });
+
 router.post("/ipn", async (req, res) => {
   const result = await Order.deleteOne({
     tran_id: req.body.tran_id,
   });
   res.status(300).redirect("https://eskul-avengers.web.app");
 });
+
 router.get("/order/:tran_id", async (req, res) => {
   const id = req.params.tran_id;
   const result = await Order.findOne({ tran_id: id });
