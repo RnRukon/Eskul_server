@@ -81,7 +81,6 @@ router.post("/init", async (req, res) => {
     value_d: "ref004_D",
   };
   const order = await Order.create(data);
-
   const sslcommer = new SSLCommerzPayment(
     process.env.STORE_ID,
     process.env.STORE_PASS,
