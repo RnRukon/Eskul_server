@@ -14,6 +14,16 @@ const reviewSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide description"],
   },
+  review_type: {
+    type: String,
+    required: [true, "Please provide review type"],
+  },
+  book: {
+    type: mongoose.Schema.ObjectId,
+  },
+  privateTeacher: {
+    type: mongoose.Schema.ObjectId,
+  },
 });
 
 reviewSchema.pre(/^find/, function (next) {
