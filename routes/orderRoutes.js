@@ -126,12 +126,10 @@ router.post("/cancel", async (req, res) => {
   res.status(300).redirect("https://eskul-avengers.web.app");
 });
 
-router.post("/ipn", async (req, res) => {
-  const result = await Order.deleteOne({
-    tran_id: req.body.tran_id,
-  });
-  res.status(300).redirect("https://eskul-avengers.web.app");
-});
+app.post("/ipn", (req, res) => {
+  console.log(req.body)
+  res.send(req.body);
+})
 
 router.get("/order/:tran_id", async (req, res) => {
   const id = req.params.tran_id;
