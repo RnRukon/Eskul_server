@@ -126,7 +126,7 @@ router.post("/cancel", async (req, res) => {
   res.status(300).redirect("https://eskul-avengers.web.app");
 });
 
-app.post("/ipn", (req, res) => {
+router.post("/ipn", (req, res) => {
   console.log(req.body)
   res.send(req.body);
 })
