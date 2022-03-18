@@ -16,7 +16,7 @@ const reviewSchema = new mongoose.Schema({
   },
   review_type: {
     type: String,
-    required: [true, "Please provide review type"],
+    default: "review",
   },
   book: {
     type: mongoose.Schema.ObjectId,
