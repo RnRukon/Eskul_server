@@ -36,7 +36,11 @@ router.get("/myOrder/:email", async (req, res) => {
 // approve api-------------------
 router.patch("/statusUpdate/:id", async (req, res) => {
   const status = req.body.status;
-  const result = await Order.findByIdAndUpdate(req.params.id, { status });
+  const result = await Order.findByIdAndUpdate(
+    req.params.id,
+    { status },
+    { new: true }
+  );
   res.send(result);
 });
 //sslcommerz init
@@ -87,7 +91,6 @@ router.post("/init", async (req, res) => {
     false
   ); //true for live default false for sandbox
   sslcommer.init(data).then((data) => {
-
     //https://developer.sslcommerz.com/doc/v4/#returned-parameters
 
     if (data.GatewayPageURL) {
@@ -108,7 +111,9 @@ router.post("/success", async (req, res) => {
       },
     }
   );
-  res.status(200).redirect(`https://eskul-avengers.web.app/success/${req.body.tran_id}`);
+  res
+    .status(200)
+    .redirect(`https://eskul-avengers.web.app/success/${req.body.tran_id}`);
 });
 
 router.post("/fail", async (req, res) => {
@@ -138,4 +143,3 @@ router.get("/order/:tran_id", async (req, res) => {
   res.json(result);
 });
 module.exports = router;
-
