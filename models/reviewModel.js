@@ -24,6 +24,9 @@ const reviewSchema = new mongoose.Schema({
   privateTeacher: {
     type: mongoose.Schema.ObjectId,
   },
+  school: {
+    type: mongoose.Schema.ObjectId,
+  },
 });
 
 reviewSchema.pre(/^find/, function (next) {
