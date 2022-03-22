@@ -36,6 +36,7 @@ router.get("/myOrder/:email", async (req, res) => {
 // approve api-------------------
 router.patch("/statusUpdate/:id", async (req, res) => {
   const status = req.body.status;
+  console.log(req)
   const result = await Order.findByIdAndUpdate(
     req.params.id,
     { status },
