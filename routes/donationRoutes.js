@@ -6,17 +6,17 @@ const Donation = require("../models/donationModel");
 
 require("dotenv").config();
 // all order products get ==============================================
-router.get("/allOrder", async (req, res) => {
-  const products = await Donation.find({});
-  res.send(products);
+router.get("/allDonation", async (req, res) => {
+  const donations = await Donation.find({});
+  res.send(donations);
 });
 // Delete manage all product ----------
-router.delete("/manageAllOrderDelete/:id", async (req, res) => {
+router.delete("/manageAllDonationDelete/:id", async (req, res) => {
   const result = await Donation.findByIdAndDelete(req.params.id);
   res.send(result);
 });
 // my order delete ----------
-router.delete("/myOrderDelete/:id", async (req, res) => {
+router.delete("/myMyDonationDelete/:id", async (req, res) => {
   const result = await Donation.findByIdAndDelete(req.params.id);
   res.send(result);
 });
@@ -27,11 +27,11 @@ router.post("/addToCartProduct", async (req, res) => {
   res.json(result);
 });
 // email get my Order==============================================
-router.get("/myOrder/:email", async (req, res) => {
+router.get("/myDonation/:email", async (req, res) => {
   const email = req.params.email;
   const query = { cus_email: email };
-  const myOrder = await Donation.find(query);
-  res.send(myOrder);
+  const myDonation = await Donation.find(query);
+  res.send(myDonation);
 });
 // approve api-------------------
 router.patch("/statusUpdate/:id", async (req, res) => {
@@ -44,32 +44,27 @@ router.patch("/statusUpdate/:id", async (req, res) => {
   res.send(result);
 });
 //sslcommerz init
-router.post("/init", async (req, res) => {
+router.post("/donationInit", async (req, res) => {
   const data = {
     total_amount: req.body.total_amount,
-    currency: req.body.currency,
+    currency: 'BDT',
     tran_id: uuidv4(),
-    success_url: "https://eskul-server.herokuapp.com/api/success",
-    fail_url: "https://eskul-server.herokuapp.com/api/fail",
-    cancel_url: "https://eskul-server.herokuapp.com/api/cancel",
-    ipn_url: "https://eskul-server.herokuapp.com/api/ipn",
-    shipping_method: "Courier",
-    product_name: "req.body.product_name",
-    product_category: "Electronic",
-    product_profile: "req.body.product_profile",
+    success_url: "https://localhost:8000/api/donationSuccess",
+    fail_url: "https://localhost:8000/api/fail",
+    cancel_url: "https://localhost:8000/api/cancel",
+    ipn_url: "https://localhost:8000/api/ipn",
+    product_name: "Donation",
+    product_category: "Donation",
+    product_profile: "Donation",
     cus_name: req.body.cus_name,
     cus_email: req.body.cus_email,
     date: req.body.date,
-    status: req.body.status,
-    cartBooks: req.body.cartBooks,
     product_image: "https://i.ibb.co/t8Xfymf/logo-277198595eafeb31fb5a.png",
     cus_add1: req.body.cus_add1,
-    cus_add2: "Dhaka",
     cus_city: req.body.cus_city,
-    cus_state: req.body.cus_state,
     cus_postcode: req.body.cus_postcode,
     cus_country: req.body.cus_country,
-    cus_phone: req.body.cus_phone,
+    ocupation: req.body.ocupation,
     cus_fax: "01711111111",
     ship_name: "Customer Name",
     ship_add1: "Dhaka",
@@ -102,7 +97,7 @@ router.post("/init", async (req, res) => {
     }
   });
 });
-router.post("/success", async (req, res) => {
+router.post("/donationSuccess", async (req, res) => {
   const result = await Donation.updateOne(
     { tran_id: req.body.tran_id },
     {
@@ -113,31 +108,31 @@ router.post("/success", async (req, res) => {
   );
   res
     .status(200)
-    .redirect(`https://eskul-avengers.web.app/success/${req.body.tran_id}`);
+    .redirect(`https://localhost:3000/success/${req.body.tran_id}`);
 });
 
 router.post("/fail", async (req, res) => {
   const result = await Donation.deleteOne({
     tran_id: req.body.tran_id,
   });
-  res.status(400).redirect("https://eskul-avengers.web.app");
+  res.status(400).redirect("https://localhost:3000");
 });
 
 router.post("/cancel", async (req, res) => {
   const result = await Donation.deleteOne({
     tran_id: req.body.tran_id,
   });
-  res.status(300).redirect("https://eskul-avengers.web.app");
+  res.status(300).redirect("https://localhost:3000");
 });
 
 router.post("/ipn", async (req, res) => {
   const result = await Donation.deleteOne({
     tran_id: req.body.tran_id,
   });
-  res.status(300).redirect("https://eskul-avengers.web.app");
+  res.status(300).redirect("https://localhost:3000");
 });
 
-router.get("/order/:tran_id", async (req, res) => {
+router.get("/donationReq/:tran_id", async (req, res) => {
   const id = req.params.tran_id;
   const result = await Donation.findOne({ tran_id: id });
   res.json(result);
