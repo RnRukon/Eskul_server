@@ -47,7 +47,7 @@ router.patch("/statusUpdate/:id", async (req, res) => {
 router.post("/donationInit", async (req, res) => {
   const data = {
     total_amount: req.body.total_amount,
-    currency: 'BDT',
+    currency: "BDT",
     tran_id: uuidv4(),
     success_url: "https://localhost:8000/api/donationSuccess",
     fail_url: "https://localhost:8000/api/fail",
@@ -78,6 +78,8 @@ router.post("/donationInit", async (req, res) => {
     value_b: "ref002_B",
     value_c: "ref003_C",
     value_d: "ref004_D",
+    cus_phone: "01799999999",
+    shipping_method: "NO",
   };
   const order = await Donation.create(data);
   const sslcommer = new SSLCommerzPayment(
