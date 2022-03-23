@@ -55,7 +55,7 @@ app.use("/api/teachers", teacherRouter);
 app.use("/api/privateTeachers", privateTeacherRouter);
 app.use("/api/reviews", reviewRouter);
 app.use("/api", orderRouter);
-app.use("/api/donation", donationRouter);
+app.use("/api", donationRouter);
 
 //For serving static files
 if (process.env.NODE_ENV == "production") {
