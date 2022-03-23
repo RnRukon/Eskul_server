@@ -5,7 +5,7 @@ const SSLCommerzPayment = require("sslcommerz-lts");
 const Donation = require("../models/donationModel");
 
 require("dotenv").config();
-// all order products get ==============================================
+// all Donation products get ==============================================
 router.get("/allDonation", async (req, res) => {
   const donations = await Donation.find({});
   res.send(donations);
@@ -15,18 +15,13 @@ router.delete("/manageAllDonationDelete/:id", async (req, res) => {
   const result = await Donation.findByIdAndDelete(req.params.id);
   res.send(result);
 });
-// my order delete ----------
-router.delete("/myMyDonationDelete/:id", async (req, res) => {
+// my Donation delete ----------
+router.delete("/myDonationDelete/:id", async (req, res) => {
   const result = await Donation.findByIdAndDelete(req.params.id);
   res.send(result);
 });
-// order Product ==================================================
-router.post("/addToCartProduct", async (req, res) => {
-  const product = req.body;
-  const result = await Donation.create(product);
-  res.json(result);
-});
-// email get my Order==============================================
+
+// email get my Donation==============================================
 router.get("/myDonation/:email", async (req, res) => {
   const email = req.params.email;
   const query = { cus_email: email };
@@ -34,7 +29,7 @@ router.get("/myDonation/:email", async (req, res) => {
   res.send(myDonation);
 });
 // approve api-------------------
-router.patch("/statusUpdate/:id", async (req, res) => {
+router.patch("/donationStatusUpdate/:id", async (req, res) => {
   const status = req.body.status;
   const result = await Donation.findByIdAndUpdate(
     req.params.id,
@@ -49,10 +44,10 @@ router.post("/donationInit", async (req, res) => {
     total_amount: req.body.total_amount,
     currency: "BDT",
     tran_id: uuidv4(),
-    success_url: "https://localhost:8000/api/donationSuccess",
-    fail_url: "https://localhost:8000/api/fail",
-    cancel_url: "https://localhost:8000/api/cancel",
-    ipn_url: "https://localhost:8000/api/ipn",
+    success_url: "http://localhost:8000/api/donationSuccess",
+    fail_url: "http://localhost:8000/api/fail",
+    cancel_url: "http://localhost:8000/api/cancel",
+    ipn_url: "http://localhost:8000/api/ipn",
     product_name: "Donation",
     product_category: "Donation",
     product_profile: "Donation",
@@ -63,7 +58,7 @@ router.post("/donationInit", async (req, res) => {
     cus_add1: req.body.cus_add1,
     cus_city: req.body.cus_city,
     cus_postcode: req.body.cus_postcode,
-    cus_country: req.body.cus_country,
+    cus_country: 'Bangladesh',
     ocupation: req.body.ocupation,
     cus_fax: "01711111111",
     ship_name: "Customer Name",
@@ -81,7 +76,7 @@ router.post("/donationInit", async (req, res) => {
     cus_phone: "01799999999",
     shipping_method: "NO",
   };
-  const order = await Donation.create(data);
+  const donation = await Donation.create(data);
   const sslcommer = new SSLCommerzPayment(
     process.env.STORE_ID,
     process.env.STORE_PASS,
@@ -110,31 +105,29 @@ router.post("/donationSuccess", async (req, res) => {
   );
   res
     .status(200)
-    .redirect(`https://localhost:3000/success/${req.body.tran_id}`);
+    .redirect(`http://localhost:3000/donationSuccess/${req.body.tran_id}`);
 });
 
 router.post("/fail", async (req, res) => {
   const result = await Donation.deleteOne({
     tran_id: req.body.tran_id,
   });
-  res.status(400).redirect("https://localhost:3000");
+  res.status(400).redirect("http://localhost:3000");
 });
 
 router.post("/cancel", async (req, res) => {
   const result = await Donation.deleteOne({
     tran_id: req.body.tran_id,
   });
-  res.status(300).redirect("https://localhost:3000");
+  res.status(300).redirect("http://localhost:3000");
 });
 
 router.post("/ipn", async (req, res) => {
-  const result = await Donation.deleteOne({
-    tran_id: req.body.tran_id,
-  });
-  res.status(300).redirect("https://localhost:3000");
+  console.log(req.body)
+  res.send(req.body)
 });
 
-router.get("/donationReq/:tran_id", async (req, res) => {
+router.get("/donationPay/:tran_id", async (req, res) => {
   const id = req.params.tran_id;
   const result = await Donation.findOne({ tran_id: id });
   res.json(result);
