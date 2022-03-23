@@ -49,10 +49,10 @@ router.post("/donationInit", async (req, res) => {
     total_amount: req.body.total_amount,
     currency: "BDT",
     tran_id: uuidv4(),
-    success_url: "https://localhost:8000/api/donationSuccess",
-    fail_url: "https://localhost:8000/api/fail",
-    cancel_url: "https://localhost:8000/api/cancel",
-    ipn_url: "https://localhost:8000/api/ipn",
+    success_url: "https://localhost:8000/api/donation/success",
+    fail_url: "https://localhost:8000/api/donation/donation/fail",
+    cancel_url: "https://localhost:8000/api/donation/cancel",
+    ipn_url: "https://localhost:8000/api/donation/ipn",
     product_name: "Donation",
     product_category: "Donation",
     product_profile: "Donation",
@@ -99,7 +99,7 @@ router.post("/donationInit", async (req, res) => {
     }
   });
 });
-router.post("/donationSuccess", async (req, res) => {
+router.post("/success", async (req, res) => {
   const result = await Donation.updateOne(
     { tran_id: req.body.tran_id },
     {
