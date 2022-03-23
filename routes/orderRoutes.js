@@ -131,10 +131,10 @@ router.post("/cancel", async (req, res) => {
   res.status(300).redirect("https://eskul-avengers.web.app");
 });
 
-router.post("/ipn", (req, res) => {
+router.post("/ipn", async (req, res) => {
   console.log(req.body)
   res.send(req.body);
-})
+});
 
 router.get("/order/:tran_id", async (req, res) => {
   const id = req.params.tran_id;
