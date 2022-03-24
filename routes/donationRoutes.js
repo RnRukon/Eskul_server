@@ -44,10 +44,10 @@ router.post("/donationInit", async (req, res) => {
     total_amount: req.body.total_amount,
     currency: "BDT",
     tran_id: uuidv4(),
-    success_url: "https://eskul-server.herokuapp.com/api/donationSuccess",
-    fail_url: "https://eskul-server.herokuapp.com/api/fail",
-    cancel_url: "https://eskul-server.herokuapp.com/api/cancel",
-    ipn_url: "https://eskul-server.herokuapp.com/api/ipn",
+    success_url: "http://localhost:8000/api/donationSuccess",
+    fail_url: "http://localhost:8000/api/fail",
+    cancel_url: "http://localhost:8000/api/cancel",
+    ipn_url: "http://localhost:8000/api/ipn",
     product_name: "Donation",
     product_category: "Donation",
     product_profile: "Donation",
@@ -105,21 +105,21 @@ router.post("/donationSuccess", async (req, res) => {
   );
   res
     .status(200)
-    .redirect(`https://eskul-avengers.web.app/donationSuccess/${req.body.tran_id}`);
+    .redirect(`http://localhost:3000/donationSuccess/${req.body.tran_id}`);
 });
 
 router.post("/fail", async (req, res) => {
   const result = await Donation.deleteOne({
     tran_id: req.body.tran_id,
   });
-  res.status(400).redirect("https://eskul-avengers.web.app");
+  res.status(400).redirect("http://localhost:3000");
 });
 
 router.post("/cancel", async (req, res) => {
   const result = await Donation.deleteOne({
     tran_id: req.body.tran_id,
   });
-  res.status(300).redirect("https://eskul-avengers.web.app");
+  res.status(300).redirect("http://localhost:3000");
 });
 
 router.post("/ipn", async (req, res) => {
